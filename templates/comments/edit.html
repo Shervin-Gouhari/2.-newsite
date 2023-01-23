@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+  EditComment
+{% endblock title %}
+
+{% block content %}
+  <h1>Editing your comment</h1>
+  <div class="col-5">
+    <form action="" method="post">
+      {% csrf_token %}
+      {{form|crispy}}
+      <a style="display: inline-block; margin-top: 10px;" class="btn btn-primary" onclick="history.back()">Cancel</a>
+      <input style="margin-top: 10px;" class="btn btn-success" type="submit" value="Confirm">
+      <a style="display: inline-block; margin-top: 10px;" class="btn btn-danger" href="{% url 'delete-comment' pk comment_pk %}">Delete</a>
+    </form>
+  </div>
+{% endblock content %}

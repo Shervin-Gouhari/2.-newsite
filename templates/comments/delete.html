@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}
+  DeleteComment
+{% endblock title %}
+
+{% block content %}
+  <h1>Deleting your comment</h1>
+  <p>Are you sure you want to delete this comment?</p>
+  <form action="" method="post">
+    {% csrf_token %}
+    <a class="btn btn-primary" onclick="history.back()">Cancel</a>
+    <input class="btn btn-danger" type="submit" value="Delete">
+  </form>
+{% endblock content %}

@@ -1,0 +1,13 @@
+body {
+    background-color: #022135;
+}
+
+main, footer {
+    margin-left: 20px;
+    margin-right: 20px;
+    color: white;
+}
+
+hr {
+    color: black;
+}

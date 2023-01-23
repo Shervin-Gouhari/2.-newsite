@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}
+  ArticleList
+{% endblock title %}
+
+{% block content %}
+  <h1>ArticleList</h1>
+  <a style="display: block; margin-bottom: 30px;" href="{% url 'create' %}">New +</a>
+  <ul>
+    {% for article in object_list %}
+      {% if article.author == user %}
+        <li>
+          <span style="color: rgb(8, 245, 8); font-weight: bold; -webkit-text-stroke-width: 1px; -webkit-text-stroke-color: black;">{{article.author}}</span>
+          : "<a style="text-decoration: none; color: purple; font-weight: 500;" href="{{article.get_absolute_url}}">{{article}}</a>"
+          <span style="float: right;"> | {{article.date}}</span><br>
+        </li>
+      {% else %}
+        <li>
+          {{article.author}} : "<a style="text-decoration: none; color: purple; font-weight: 500;" href="{{article.get_absolute_url}}">{{article}}</a>"
+          <span style="float: right;"> | {{article.date}}</span><br>
+        </li>
+      {% endif %}
+      <hr style="height: 5px; background-color: black;">
+    {% endfor %}
+  </ul>
+  <div><a style="margin-top: 10px;" class="btn btn-primary" href="{% url 'home' %}">Back</a></div>
+{% endblock content %}

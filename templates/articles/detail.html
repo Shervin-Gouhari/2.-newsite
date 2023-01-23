@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+  ArticleDetail
+{% endblock title %}
+
+{% block content %}
+  <h1>
+    Details of "<span style="color: purple;">{{object.title}}</span>"
+  </h1>
+
+  <h5 style="padding-top: 20px; padding-bottom: 60px;">
+    By <span style="color: purple;">{{object.author}}</span>, Created at
+    <span style="display: inline; color: purple;">{{object.date}}</span>
+  </h5>
+
+  <p>{{object.body}}</p>
+
+  {% if object.author == user %}
+    <a href="{% url 'edit' object.id %}">Edit</a> | <a href="{% url 'delete' object.id %}">Delete</a>
+  {% endif %}
+  <hr style="height: 5px; background-color: black;">
+
+  <!-- <div class="col-5">
+    <form action="" method="post">
+      {% csrf_token %}
+      {{form|crispy}}
+      <span><a style="margin-top: 10px;" class="btn btn-primary" href="{% url 'list' %}">Back</a></span>
+      <input style="margin-top: 10px;" class="btn btn-success" type="submit" value="Comment">
+    </form>
+  </div>
+  <hr style="height: 5px; background-color: black;"> -->
+
+  {% if user.is_authenticated %}
+    <div class="col-5">
+      <form action="" method="post">
+        {% csrf_token %}
+        {{form|crispy}}
+        <span><a style="margin-top: 10px;" class="btn btn-primary" href="{% url 'list' %}">Back</a></span>
+        <input style="margin-top: 10px;" class="btn btn-success" type="submit" value="Comment">
+      </form>
+    </div>
+    <hr style="height: 5px; background-color: black;">
+  {% else %}
+    <a style="color: purple; font-size: 1.25rem; font-weight: 500; text-decoration: underline;" href="{% url 'login' %}?next={% url 'detail' object.id %}">To comment, you have to login first</a>
+    <hr style="height: 5px; background-color: black;">
+  {% endif %}
+
+  <h5>Comment section:</h5>
+  <span style="color: #9ca1ac; font-size: 12px; font-weight: 400; line-height: 16.72px; letter-spacing: .48px;">Number of comments: {{object.comments.all.count}}</span><br><br>
+  <ul>
+    {% for comment in object.comments.all %}
+      {% if comment.writer == user %}
+        <li>
+          <span style="color: rgb(8, 245, 8); font-weight: bold; -webkit-text-stroke-width: 1px; -webkit-text-stroke-color: black;">{{comment.writer}}</span>
+          : <a style="color: purple; text-decoration: none;" href="{% url 'edit-comment' object.id comment.id %}">{{comment.comment}}</a><span style="float: right;"> | {{comment.date}}</span>
+        </li>
+      {% else %}
+        <li>
+          <b>{{comment.writer}} :</b> {{comment.comment}}<span style="float: right;"> | {{comment.date}}</span>
+        </li>
+      {% endif %}
+      <hr style="height: 5px; background-color: black;">
+    {% endfor %}
+  </ul>
+{% endblock content %}
